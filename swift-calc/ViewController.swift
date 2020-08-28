@@ -22,7 +22,6 @@ class ViewController: UIViewController {
         set {
             displayLabel.text = String(newValue);
         }
-        
     }
     
     override func viewDidLoad() {
@@ -35,17 +34,13 @@ class ViewController: UIViewController {
         isFinishedTypingNumber = true;
         
         if let calcMethod = sender.currentTitle {
-            switch calcMethod {
-            case "AC":
-                safeNumber = 0;
-            case "%":
-                safeNumber /= 100.00;
-            case "+/-":
-                safeNumber *= -1;
-            default:
-                print("nil");
+            let calcLogic = CalcLogic(number: safeNumber);
+            
+            guard let safeResult = calcLogic.calculate(calcMethod) else {
+                fatalError("Calculation resulted as nil");
             }
             
+            safeNumber = safeResult;
         }
         
     }
