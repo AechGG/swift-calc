@@ -10,22 +10,30 @@ import Foundation
 
 struct CalcLogic {
     
-    var number: Double;
+    private var number: Double?;
     
-    init(number: Double) {
+    mutating func setNumber(_ number: Double) {
         self.number = number;
     }
     
     func calculate(_ symbol: String) -> Double? {
+        if let n = number {
             switch symbol {
             case "AC":
                 return 0;
             case "%":
-                return number / 100.00;
+                return n / 100.00;
             case "+/-":
-                return number * -1;
+                return n * -1;
+            case "+":
+                return n + 1;
+            case "=":
+                return n * 2;
             default:
                 return nil;
+            }
         }
+        return nil;
+        
     }
 }

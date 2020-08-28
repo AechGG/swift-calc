@@ -14,6 +14,8 @@ class ViewController: UIViewController {
     
     private var isFinishedTypingNumber: Bool = true;
     
+    private var calcLogic = CalcLogic();
+    
     private var safeNumber: Double {
         get {
             guard let convertedNumber = Double(displayLabel.text!) else { fatalError() }
@@ -28,14 +30,11 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
-    
-    
-    @IBAction func calcButtonPressed(_ sender: UIButton) {
+        @IBAction func calcButtonPressed(_ sender: UIButton) {
         isFinishedTypingNumber = true;
         
         if let calcMethod = sender.currentTitle {
-            let calcLogic = CalcLogic(number: safeNumber);
-            
+            calcLogic.setNumber(safeNumber)
             guard let safeResult = calcLogic.calculate(calcMethod) else {
                 fatalError("Calculation resulted as nil");
             }
