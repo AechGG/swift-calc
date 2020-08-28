@@ -14,6 +14,11 @@ class ViewController: UIViewController {
     
     private var isFinishedTypingNumber: Bool = true;
     
+    private var safeNumber: Double {
+        guard let convertedNumber = Double(displayLabel.text!) else { fatalError() }
+        return convertedNumber;
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -23,17 +28,16 @@ class ViewController: UIViewController {
     @IBAction func calcButtonPressed(_ sender: UIButton) {
         isFinishedTypingNumber = true;
         
-        guard let number = Double(displayLabel.text!) else { fatalError() }
         if let calcMethod = sender.currentTitle {
             switch calcMethod {
             case "AC":
                 displayLabel.text = String(0);
             case "%":
-                displayLabel.text = String(number / 100.00);
+                displayLabel.text = String(safeNumber / 100.00);
             case "+/-":
-                displayLabel.text = String(number * -1);
+                displayLabel.text = String(safeNumber * -1);
             default:
-                displayLabel.text = String(number);
+                displayLabel.text = String(safeNumber);
             }
         }
         
@@ -43,9 +47,20 @@ class ViewController: UIViewController {
     @IBAction func numButtonPressed(_ sender: UIButton) {
         if let number = sender.currentTitle {
             if isFinishedTypingNumber {
-                displayLabel.text = number;
+                if number == "." {
+                    displayLabel.text = "0\(number)";
+                } else {
+                    displayLabel.text = number;
+                }
                 isFinishedTypingNumber = false;
             } else {
+                if number == "." {
+                    let isInt = floor(safeNumber) == safeNumber;
+                    if !isInt{
+                        return;
+                    }
+                }
+                
                 displayLabel.text = displayLabel.text! + number;
             }
         }
