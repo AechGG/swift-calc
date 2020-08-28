@@ -35,11 +35,9 @@ class ViewController: UIViewController {
         
         if let calcMethod = sender.currentTitle {
             calcLogic.setNumber(safeNumber)
-            guard let safeResult = calcLogic.calculate(calcMethod) else {
-                fatalError("Calculation resulted as nil");
+            if let safeResult = calcLogic.calculate(calcMethod)  {
+                safeNumber = safeResult;
             }
-            
-            safeNumber = safeResult;
         }
         
     }
