@@ -9,7 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
     @IBOutlet weak var displayLabel: UILabel!
     
     private var isFinishedTypingNumber: Bool = true;
@@ -18,13 +18,16 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
-
-
+    
+    
     @IBAction func calcButtonPressed(_ sender: UIButton) {
         isFinishedTypingNumber = true;
         
-        if let number = Double(displayLabel.text!) {
-            switch sender.currentTitle {
+        guard let number = Double(displayLabel.text!) else { fatalError() }
+        if let calcMethod = sender.currentTitle {
+            switch calcMethod {
+            case "AC":
+                displayLabel.text = String(0);
             case "%":
                 displayLabel.text = String(number / 100.00);
             case "+/-":
@@ -33,6 +36,7 @@ class ViewController: UIViewController {
                 displayLabel.text = String(number);
             }
         }
+        
     }
     
     
