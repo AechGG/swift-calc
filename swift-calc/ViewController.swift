@@ -15,8 +15,14 @@ class ViewController: UIViewController {
     private var isFinishedTypingNumber: Bool = true;
     
     private var safeNumber: Double {
-        guard let convertedNumber = Double(displayLabel.text!) else { fatalError() }
-        return convertedNumber;
+        get {
+            guard let convertedNumber = Double(displayLabel.text!) else { fatalError() }
+            return convertedNumber;
+        }
+        set {
+            displayLabel.text = String(newValue);
+        }
+        
     }
     
     override func viewDidLoad() {
@@ -31,14 +37,15 @@ class ViewController: UIViewController {
         if let calcMethod = sender.currentTitle {
             switch calcMethod {
             case "AC":
-                displayLabel.text = String(0);
+                safeNumber = 0;
             case "%":
-                displayLabel.text = String(safeNumber / 100.00);
+                safeNumber /= 100.00;
             case "+/-":
-                displayLabel.text = String(safeNumber * -1);
+                safeNumber *= -1;
             default:
-                displayLabel.text = String(safeNumber);
+                print("nil");
             }
+            
         }
         
     }
@@ -56,7 +63,7 @@ class ViewController: UIViewController {
             } else {
                 if number == "." {
                     let isInt = floor(safeNumber) == safeNumber;
-                    if !isInt{
+                    if !isInt {
                         return;
                     }
                 }
