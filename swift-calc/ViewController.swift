@@ -12,7 +12,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var displayLabel: UILabel!
     
-    var isFinishedTypingNumber: Bool = true;
+    private var isFinishedTypingNumber: Bool = true;
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +22,17 @@ class ViewController: UIViewController {
 
     @IBAction func calcButtonPressed(_ sender: UIButton) {
         isFinishedTypingNumber = true;
+        
+        if let number = Double(displayLabel.text!) {
+            switch sender.currentTitle {
+            case "%":
+                displayLabel.text = String(number / 100.00);
+            case "+/-":
+                displayLabel.text = String(number * -1);
+            default:
+                displayLabel.text = String(number);
+            }
+        }
     }
     
     
